@@ -1,0 +1,43 @@
+<div class="form-container">
+  <h3>Add New User</h3>
+  
+  <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+    
+    <div>
+      <label>Name:</label>
+      <input type="text" formControlName="name" placeholder="Enter name">
+      @if (userForm.get('name')?.invalid && userForm.get('name')?.touched) {
+        <small class="error-text">Name is required.</small>
+      }
+    </div>
+
+    <div style="margin-top: 10px;">
+      <label>Email:</label>
+      <input type="email" formControlName="email" placeholder="Enter email">
+      
+      @if (userForm.get('email')?.invalid && userForm.get('email')?.touched) {
+        <div class="error-text">
+          @if (userForm.get('email')?.errors?.['required']) {
+            <small>Email is required.</small>
+          }
+          @if (userForm.get('email')?.errors?.['email']) {
+            <small>Please enter a valid email.</small>
+          }
+        </div>
+      }
+    </div>
+
+    <div style="margin-top: 10px;">
+      <label>Role:</label>
+      <select formControlName="role">
+        <option value="Admin">Admin</option>
+        <option value="User">User</option>
+        <option value="Editor">Editor</option>
+      </select>
+    </div>
+
+    <button type="submit" [disabled]="userForm.invalid" style="margin-top: 15px;">
+      Save User
+    </button>
+  </form>
+</div>
